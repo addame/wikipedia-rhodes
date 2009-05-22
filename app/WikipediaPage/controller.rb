@@ -8,7 +8,6 @@ class WikipediaPageController < Rho::RhoController
   # GET /WikipediaPage
   def index
     @search = "::Home"
-    
     render :action => :index
   end
   
