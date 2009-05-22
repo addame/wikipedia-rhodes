@@ -4,22 +4,15 @@ var loading = false;
  
 $(function() {
   setInterval("checkAnchor()", 300)
-  alert("page loaded");
   get(searchTermPath());
-  alert("loading")
 })
 
-var alert = function(message) {
-  document.write(message)
-}
- 
 var checkAnchor = function() {
   var current_anchor = document.location.hash; 
   if(!loading && (current_anchor != last_anchor)) {
     var term = current_anchor.substr(1, current_anchor.length);
     setSearchTerm(term);
     get("/wiki/" + term)
-    alert("checkAnchor")
   }
 }
  

@@ -1,14 +1,15 @@
 require 'rho/rhocontroller'
 require 'rho/rhosupport'
 require 'rhom/rhom_source' 
-
+ 
 class WikipediaPageController < Rho::RhoController
   include Rhom
   
-  # GET /WikipediaPage/index
+  # GET /WikipediaPage
   def index
     @search = "::Home"
-    render
+    
+    render :action => :index
   end
   
   # shows there was an error with option to retry
