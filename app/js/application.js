@@ -4,7 +4,6 @@ var loading = false;
  
 $(function() {
   setInterval("checkAnchor()", 300)
-  get(searchTermPath());
 })
 
 
