@@ -31,7 +31,7 @@ var get = function(remote_path) {
   loading = true;
   $("#loading").show();
   $("#content").hide();
-  url = 'http://en.m.wikitest.org:4000/' + remote_path;
+  url = 'http://en.m.wikipedia.org/' + remote_path;
   // If we already have a query string... using the index.php style links
   if(remote_path.indexOf("index.php") >= 0) {
     url = url + "&"
