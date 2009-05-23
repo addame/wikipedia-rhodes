@@ -1,14 +1,14 @@
 
 <div class="toolbar">
-  <span class="left_button"><a href="/" onclick="closeHistory(); return false;" class="button">Close</a></span>
+  <span class="left_button" onclick="closeHistory();"><a href="/" onclick="closeHistory(); return false;" class="iphone_button">Close</a></span>
   <h1 id="pageTitle">History</h1>
-  <span class="right_button"><a href="/" onclick="clearHistory(); return false;" class="button">Clear</a></span>
+  <span class="right_button" onclick="clearHistory();"><a href="/" onclick="clearHistory(); return false;" class="iphone_button">Clear</a></span>
 </div>
 
 <div id="history">
   <ul>
   <% @pages.each do |page| %>
-    <li><%= "<a href=\"javascript:get('/wiki/#{page.title}')\">#{page.title}</a>" %></li>
+    <li onclick="javascript:get('/wiki/<%= page.title %>')"><%= "<a href=\"javascript:get('/wiki/#{page.title}')\">#{page.title}</a>" %></li>
   <% end %>
   </ul>
 </div>

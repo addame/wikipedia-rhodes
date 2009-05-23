@@ -14,20 +14,10 @@ var checkAnchor = function() {
     get("/wiki/" + term)
   }
 }
- 
-var toolbarOptionalButton = function() {
-  $.get("/app/WikipediaPage/history?ajax=true", function(data) {
-    $('#history_box').html(data).show();
-    $('#wrapper').hide();
-    scroll(0,0);
-    return 'false';
-  })
-}
+
  
 var get = function(remote_path) {
   loading = true;
-  $("#loading").show();
-  $("#content").hide();
   url = 'http://en.m.wikipedia.org' + remote_path;
   // If we already have a query string... using the index.php style links
   if(remote_path.indexOf("index.php") >= 0) {
@@ -39,8 +29,12 @@ var get = function(remote_path) {
   aObj = new JSONscriptRequest(url);
   aObj.buildScriptTag();
   aObj.addScriptTag();
+  scroll(0,0);
+  $("#loading").show();
+  $("#content").hide();
 }
- 
+
+var href;
 var displayPage = function(articleData) {
   $("#content").html(articleData["html"]).show();
   $("#loading").hide();
@@ -51,14 +45,24 @@ var displayPage = function(articleData) {
   $.get("/app/WikipediaPage/page_loaded", {title: articleData["title"]});
   $("#content a").each(function() {
     $(this).click(function() {
-      var path = $(this).attr("href")
-      get(path)
-      return false;
+      href = $(this).attr("href");
+      if($(this).attr("href").indexOf("http://") == 0) {
+        return true;
+      } else {
+        var path = $(this).attr("href")
+        get(path) 
+        return false;
+      }
     })
   })
   activateButtons();
   closeHistory();
   loading = false;
+}
+
+var shouldOpenURLOnPhone = function(url) {
+  alert("should?");
+  return !((url.indexOf("localhost") > 0) || (url.indexOf("wikipedia.org") > 0))
 }
  
 var searchTermPath = function() {
@@ -68,6 +72,23 @@ var searchTermPath = function() {
 var setSearchTerm = function(term) {
   $("#search_term").val(decodeURIComponent(term));
 }
+
+var showHistory = function() {
+  $.get("/app/WikipediaPage/history?ajax=true", function(data) {
+    $('#history_box').html(data)
+    // We have to URI decode the listed links before we show it.
+    $('#history_box li a').each(function() {
+      $(this).html(decodeURIComponent($(this).html()))
+    })
+    $('#history_box').show();
+    $('#wrapper').hide();
+    scroll(0,0);
+    return 'false';
+  })
+}
+
+// This is the method that actually gets called, but we alias it.
+var toolbarOptionalButton = showHistory;
  
 var clearHistory = function() {
   $.get("/app/WikipediaPage/history?clear=true&ajax=true", function(data) {
