@@ -6,8 +6,6 @@ $(function() {
   setInterval("checkAnchor()", 300)
 })
 
-
-
 var checkAnchor = function() {
   var current_anchor = document.location.hash; 
   if(!loading && (current_anchor != last_anchor)) {
@@ -59,6 +57,7 @@ var displayPage = function(articleData) {
     })
   })
   activateButtons();
+  closeHistory();
   loading = false;
 }
  

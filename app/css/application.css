@@ -61,4 +61,5 @@ h1#pageTitle {position:relative;top:10px;margin:0;padding:0;color:white;text-ali
 #loading {
   margin-top: 200px;
   text-align: center;
+  height: 400px;
 }
