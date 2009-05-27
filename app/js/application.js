@@ -3,7 +3,15 @@ var last_anchor;
 var loading = false;
  
 $(function() {
-  setInterval("checkAnchor()", 300)
+  get(searchTermPath());
+  setInterval("checkAnchor()", 400)
+  
+  $("#clear_box")
+    .click(function() {
+      $("#search_term")
+        .val("")
+        .focus();
+    });
 })
 
 var checkAnchor = function() {
@@ -19,12 +27,14 @@ var checkAnchor = function() {
 var get = function(remote_path) {
   loading = true;
   url = 'http://en.m.wikipedia.org' + remote_path;
+  $('#search_term').blur();
   // If we already have a query string... using the index.php style links
   if(remote_path.indexOf("index.php") >= 0) {
     url = url + "&"
   } else {
     url = url + "?"
   }
+  
   url = url + "format=json&callback=displayPage"
   aObj = new JSONscriptRequest(url);
   aObj.buildScriptTag();
@@ -32,6 +42,7 @@ var get = function(remote_path) {
   scroll(0,0);
   $("#loading").show();
   $("#content").hide();
+  closeHistory();
 }
 
 var href;
@@ -39,7 +50,6 @@ var displayPage = function(articleData) {
   $("#content").html(articleData["html"]).show();
   $("#loading").hide();
   setSearchTerm(articleData["title"]);
-  
   window.location = "#" + articleData["title"];
   last_anchor = document.location.hash;
   $.get("/app/WikipediaPage/page_loaded", {title: articleData["title"]});
@@ -56,7 +66,6 @@ var displayPage = function(articleData) {
     })
   })
   activateButtons();
-  closeHistory();
   loading = false;
 }
 

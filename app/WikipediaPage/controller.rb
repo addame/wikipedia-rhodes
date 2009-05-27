@@ -7,7 +7,13 @@ class WikipediaPageController < Rho::RhoController
   
   # GET /WikipediaPage
   def index
-    @search = "::Home"
+    # Inefficient, but there is a bug in order that lets us not do descending
+    @last_page = WikipediaPage.find(:all, {:order => "updated_at"}).last
+    if @last_page
+      @search = @last_page.title
+    else
+      @search = "::Home"
+    end
     render :action => :index
   end
   

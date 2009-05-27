@@ -1,17 +1,23 @@
 <form id="search_form" method="POST" action="javascript:get(searchTermPath());">
-	<span class="left" />
-  <input type="text" name="id" id='search_term' value="<%= @search.gsub('_', ' ') %>" />
-	<span class="right" />
+	<span class="left">&nbsp;</span>
+	<div class="borderbox">
+    <input type="text" name="id" id='search_term' value="<%= @search %>" />
+  </div>
+  <span id="clear_box">&nbsp;</span>
+	<span class="right">&nbsp;</span>
 	<div class="clearer"></div>
 </form>
 
-<div id="loading">
- <img src="/app/css/ajax-loader.gif" />
- <div class="messageloading">Page Loading...</div>
- <br/>
-</div>
+<% unless System.has_network %>
+  <h2 class="redalert">Internet connectivity is required, but was not detected. Make sure your device is connected to the Internet before proceeding.</div>
+<% else %>
+  <div id="loading">
+   <img src="/app/css/ajax-loader.gif" />
+   <div class="messageloading">Page Loading...</div>
+   <br/>
+  </div>
  
-
-<div id="content">
-</div>
+  <div id="content">
+  </div>
+<% end %>
 
