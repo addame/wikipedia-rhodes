@@ -3,7 +3,16 @@ var last_anchor;
 var loading = false;
  
 $(function() {
-  get(searchTermPath());
+  // The basic logic here is that if we are loading for the first (startup)
+  // the the controller has populated the search field with where we should start...
+  // we won't have a hash-location yet. But, if we are refreshing or going back/forward
+  // then we will have a hash-location
+  if(document.location.hash == "") {
+    get(searchTermPath());
+  } else {
+    checkAnchor();
+  }
+
   setInterval("checkAnchor()", 400)
   
   $("#clear_box")
@@ -26,8 +35,14 @@ var checkAnchor = function() {
  
 var get = function(remote_path) {
   loading = true;
-  url = 'http://en.m.wikipedia.org' + remote_path;
   $('#search_term').blur();
+
+  // Strip out anchors in the URL, we can deal with these later.
+  if(remote_path.indexOf("#") > 0) {
+    remote_path = remote_path.substr(0, remote_path.indexOf("#"))
+  }
+  
+  url = 'http://en.m.wikipedia.org' + remote_path;
   // If we already have a query string... using the index.php style links
   if(remote_path.indexOf("index.php") >= 0) {
     url = url + "&"
@@ -70,8 +85,7 @@ var displayPage = function(articleData) {
 }
 
 var shouldOpenURLOnPhone = function(url) {
-  alert("should?");
-  return !((url.indexOf("localhost") > 0) || (url.indexOf("wikipedia.org") > 0))
+  return !((url.indexOf("localhost") > 0) || (url.indexOf("m.wikipedia.org") > 0))
 }
  
 var searchTermPath = function() {
@@ -99,6 +113,9 @@ var showHistory = function() {
 // This is the method that actually gets called, but we alias it.
 var toolbarOptionalButton = showHistory;
  
+var toolbarGoHome = function() {
+  get("/wiki/::Home");
+}
 var clearHistory = function() {
   $.get("/app/WikipediaPage/history?clear=true&ajax=true", function(data) {
     $('#history_box').html(data)
