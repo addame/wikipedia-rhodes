@@ -1,0 +1,11 @@
+Getting Started
+
+First, clone both wikimedia/wikipedia-rhodes and wikimedia/rhodes
+
+Secondly, create a file in your ~home directory called rho_build.conf and put this inside it
+
+  apps.dir=/path/too/wikipedia-rhodes
+
+Finally, open rhodes' iPhone platform directory and compile.
+
+If you have any problems or questions, please contact hcatlin@wikimedia.org
