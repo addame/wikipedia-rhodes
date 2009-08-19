@@ -64,7 +64,12 @@ var href;
 var displayPage = function(articleData) {
   $("#content").html(articleData["html"]).show();
   $("#loading").hide();
-  setSearchTerm(articleData["title"]);
+  var external_title = articleData["title"];
+  if(external_title == "::Home") {
+    external_title = "Main_Page"
+  } 
+  
+  $('#outsideLink').attr('href', "http://en.wikipedia.org/w/mobileRedirect.php?to=http://en.wikipedia.org/wiki/" + encodeURIComponent(external_title))
   window.location = "#" + articleData["title"];
   last_anchor = document.location.hash;
   $.get("/app/WikipediaPage/page_loaded", {title: articleData["title"]});

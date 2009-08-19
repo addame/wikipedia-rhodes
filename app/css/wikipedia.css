@@ -13,10 +13,12 @@
     padding-right: 5px; }
 
 .notice {
-  padding: 5px;
+  padding: 20px;
   background: #ddd;
   -webkit-border-radius: 5px;
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 1.5em;
   text-align: center; }
 
 
